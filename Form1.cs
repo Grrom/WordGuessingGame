@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -10,19 +11,27 @@ namespace WordGuessingGame
     public partial class Form1 : Form
     {
         public StringBuilder ActualAnswer = new StringBuilder();
-        public object[] QuestionList = {
-            new WordQuestion("Who Wrote this code", "jerome"),
-            new WordQuestion("Describe the guy who wrote this code in one word", "great"),
-            new WordQuestion("What language was this written in", "c-sharp"),
-            new WordQuestion("Will Jerome get perfect score for this activity", "ofcourse"),
-            new WordQuestion("What species are you", "human"),
-            new WordQuestion("In what planet do we live in", "earth"),
-        };
+        public ArrayList QuestionList = new ArrayList();
 
         public int CurrentQuestion = 0;
 
         public Form1()
         {
+            object[] questionList = {
+                new WordQuestion("Who Wrote this code", "jerome"),
+                new WordQuestion("Describe the guy who wrote this code in one word", "great"),
+                new WordQuestion("What language was this written in", "c-sharp"),
+                new WordQuestion("Will Jerome get perfect score for this activity", "ofcourse"),
+                new WordQuestion("What species are you", "human"),
+                new WordQuestion("In what planet do we live in", "earth"),
+            };
+
+            for (int i = 0; i < questionList.Length; i++)
+            {
+                QuestionList.Add(questionList[i]);
+            }
+
+
             InitializeComponent();
             BuildForm();
         }
@@ -84,7 +93,7 @@ namespace WordGuessingGame
             if (answerLabel.Text == (QuestionList[CurrentQuestion] as WordQuestion).Answer)
             {
                 MessageBox.Show("Correct!");
-                if (CurrentQuestion < QuestionList.Length - 1) CurrentQuestion++;
+                if (CurrentQuestion < QuestionList.Count - 1) CurrentQuestion++;
                 else CurrentQuestion = 0;
                 ActualAnswer.Clear();
                 answerLabel.Text = ActualAnswer.ToString();
