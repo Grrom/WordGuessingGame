@@ -33,6 +33,7 @@ namespace WordGuessingGame
             this.answerLabel = new System.Windows.Forms.Label();
             this.clearButton = new System.Windows.Forms.Button();
             this.submit = new System.Windows.Forms.Button();
+            this.optionsPanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // question
@@ -78,11 +79,20 @@ namespace WordGuessingGame
             this.submit.UseVisualStyleBackColor = true;
             this.submit.Click += new System.EventHandler(this.Submit_Click);
             // 
+            // optionsPanel
+            // 
+            this.optionsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.optionsPanel.Location = new System.Drawing.Point(12, 166);
+            this.optionsPanel.Name = "optionsPanel";
+            this.optionsPanel.Size = new System.Drawing.Size(776, 103);
+            this.optionsPanel.TabIndex = 4;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.optionsPanel);
             this.Controls.Add(this.submit);
             this.Controls.Add(this.clearButton);
             this.Controls.Add(this.answerLabel);
@@ -99,6 +109,7 @@ namespace WordGuessingGame
         private System.Windows.Forms.Label answerLabel;
         private System.Windows.Forms.Button clearButton;
         private System.Windows.Forms.Button submit;
+        private System.Windows.Forms.Panel optionsPanel;
     }
 }
 

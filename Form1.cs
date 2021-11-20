@@ -2,25 +2,42 @@
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace WordGuessingGame
 {
     public partial class Form1 : Form
     {
+        public StringBuilder ActualAnswer = new StringBuilder();
+        public object[] QuestionList = {
+            new WordQuestion("Who Wrote this code", "jerome"),
+            new WordQuestion("Describe the guy who wrote this code in one word", "great"),
+            new WordQuestion("What language was this written in", "c-sharp"),
+            new WordQuestion("Will Jerome get perfect score for this activity", "ofcourse"),
+            new WordQuestion("What species are you", "human"),
+            new WordQuestion("In what planet do we live in", "earth"),
+        };
+
+        public int CurrentQuestion = 0;
+
         public Form1()
         {
             InitializeComponent();
-            WordQuestion x = new WordQuestion("Who Wrote this code?", "jerome");
+            BuildForm();
+        }
 
-            GenerateOptions(x.Answer);
-            SetQuestion(x.Question);
+        private void BuildForm()
+        {
+            WordQuestion current = (WordQuestion)QuestionList[CurrentQuestion];
+            GenerateOptions(current.Answer);
+            SetQuestion(current.Question);
         }
 
         private void GenerateOptions(string answer)
         {
-            int top = 160;
-            int left = 50;
+            int top = 0;
+            int left = 290;
 
             Random num = new Random();
             string options = new string(answer.ToCharArray().
@@ -37,15 +54,15 @@ namespace WordGuessingGame
                     Height = 30,
                     Width = 30,
                     Font = new Font("Arial", 12),
-
                 };
 
                 button.Click += (s, e) =>
                 {
-                    answerLabel.Text += current;
+                    ActualAnswer.Append(current);
+                    answerLabel.Text = ActualAnswer.ToString();
                 };
 
-                Controls.Add(button);
+                optionsPanel.Controls.Add(button);
                 left += button.Width + 2;
             }
         }
@@ -58,12 +75,23 @@ namespace WordGuessingGame
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            answerLabel.Text = "";
+            ActualAnswer.Clear();
+            answerLabel.Text = ActualAnswer.ToString();
         }
 
         private void Submit_Click(object sender, EventArgs e)
         {
-
+            if (answerLabel.Text == (QuestionList[CurrentQuestion] as WordQuestion).Answer)
+            {
+                MessageBox.Show("Correct!");
+                if (CurrentQuestion < QuestionList.Length - 1) CurrentQuestion++;
+                else CurrentQuestion = 0;
+                ActualAnswer.Clear();
+                answerLabel.Text = ActualAnswer.ToString();
+                optionsPanel.Controls.Clear();
+                BuildForm();
+            }
+            else MessageBox.Show("Wrong Answer!");
         }
     }
 }
